@@ -5,16 +5,35 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".MainActivity">
-    <!-- on below line creating a text view for displaying the heading of our application -->
-    <com.paypal.checkout.paymentbutton.PaymentButtonContainer
-        android:id="@+id/payment_button_container"
+    tools:context=".activities_and_fragments.Activities.MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        app:paypal_button_color="silver"
-        app:paypal_button_label="pay"
-        app:paypal_button_shape="rectangle"
-        app:paypal_button_size="large"
-        app:paypal_button_enabled="true" />
+        android:layout_height="wrap_content">
+        
+    </androidx.appcompat.widget.Toolbar>
+    
+    <FrameLayout
+        android:id="@+id/framelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_above="@id/bottomBar"/>
+
+    <!-- on below line creating a text view for displaying the heading of our application -->
+    <me.ibrahimsn.lib.SmoothBottomBar
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        app:backgroundColor="@color/white"
+        app:textColor="@color/orange"
+        app:iconTint="@color/gray"
+        app:iconTintActive="@color/orange"
+        app:indicatorColor="@color/Light_orange"
+        app:indicatorRadius="10dp"
+        app:menu="@menu/menu"
+        android:contentDescription="@string/nav_bar"
+        />
 </RelativeLayout>

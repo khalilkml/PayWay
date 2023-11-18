@@ -1,4 +1,4 @@
-package com.example.payway;
+package com.example.payway.servies;
 
 import android.app.Application;
 import android.os.Build;

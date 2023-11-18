@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "466721261281",
+    "project_id": "payway-47f4f",
+    "storage_bucket": "payway-47f4f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:466721261281:android:29c4b7067b3154599e99a0",
+        "android_client_info": {
+          "package_name": "com.example.payway"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_qBwKVboV_q7n0ylupl9fD-05Eg4EeC0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
