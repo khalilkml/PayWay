@@ -7,19 +7,14 @@
     android:orientation="vertical"
     tools:context=".activities_and_fragments.Activities.MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        
-    </androidx.appcompat.widget.Toolbar>
-    
+
     <FrameLayout
         android:id="@+id/framelayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
-        android:layout_above="@id/bottomBar"/>
+        android:layout_above="@id/bottomBar"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp" />
 
     <!-- on below line creating a text view for displaying the heading of our application -->
     <me.ibrahimsn.lib.SmoothBottomBar

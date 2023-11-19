@@ -4,6 +4,13 @@ public class Client {
     String username;
     String number;
     String id;
+
+        // No-argument constructor
+    public Client() {
+        // Required for Firebase deserialization
+    }
+
+
     public Client(String username,String number,String id){
         this.username=username;
         this.number=number;

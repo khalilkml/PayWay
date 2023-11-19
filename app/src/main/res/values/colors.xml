@@ -5,6 +5,7 @@
     <color name="orange">#FF5722</color>
     <color name="Light_orange">#FFDED3</color>
     <color name="gray">#B8B8B8</color>
+    <color name="lightGray">#A0A0A0</color>
     <!-- Orange Gradient Colors -->
     <color name="orangeDark">#FF4500</color> <!-- Darker shade -->
     <color name="orangeLight">#FFA07A</color> <!-- Lighter shade -->

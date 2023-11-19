@@ -4,12 +4,12 @@ public class Product {
     private String productId;
     private String productName;
     private String productDescription;
-    private double productPrice;
-    private double productPastPrice;
+    private String productPrice;
+    private String productPastPrice;
     private boolean isFavorite;
     private String imageUrl;
 
-    public Product(String productId, String productName, String productDescription, double productPrice, double productPastPrice, boolean isFavorite, String imageUrl) {
+    public Product(String productId, String productName, String productDescription, String productPrice, String productPastPrice, boolean isFavorite, String imageUrl) {
         this.productId = productId;
         this.productName = productName;
         this.productDescription = productDescription;
@@ -47,20 +47,20 @@ public class Product {
     }
 
     // Getters and setters for productPrice
-    public double getProductPrice() {
+    public String getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(double productPrice) {
+    public void setProductPrice(String productPrice) {
         this.productPrice = productPrice;
     }
 
     // Getters and setters for productPastPrice
-    public double getProductPastPrice() {
+    public String getProductPastPrice() {
         return productPastPrice;
     }
 
-    public void setProductPastPrice(double productPastPrice) {
+    public void setProductPastPrice(String productPastPrice) {
         this.productPastPrice = productPastPrice;
     }
 

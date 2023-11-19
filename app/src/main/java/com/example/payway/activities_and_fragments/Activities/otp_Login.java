@@ -82,7 +82,7 @@ public class otp_Login extends AppCompatActivity {
 
                             @Override
                             public void onVerificationFailed(@NonNull FirebaseException e) {
-                                Toast.makeText(otp_Login.this, "OTP verificatio failed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(otp_Login.this, "OTP verifications failed"+e, Toast.LENGTH_LONG).show();
                                 setInProgress(false);
                             }
 

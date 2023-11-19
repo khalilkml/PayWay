@@ -54,18 +54,15 @@ public class welcome extends AppCompatActivity {
         if(client!=null){
             client.setUsername(username);
         }else{
-            client = new Client(username,phoneNumber, Firebase.currentUserId());
+            client = new Client(username,phoneNumber, Firebase.currentUserId().toString());
         }
 
-        Firebase.currentUserDetails().set(client).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                setInProgress(false);
-                if(task.isSuccessful()){
-                    Intent intent = new Intent(welcome.this,MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
-                    startActivity(intent);
-                }
+        Firebase.currentUserDetails().set(client).addOnCompleteListener(task -> {
+            setInProgress(false);
+            if(task.isSuccessful()){
+                Intent intent = new Intent(welcome.this,MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+                startActivity(intent);
             }
         });
 

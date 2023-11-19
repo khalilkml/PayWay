@@ -1,37 +1,45 @@
 package com.example.payway.Data_Managers;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.payway.R;
 
 import java.util.List;
 
-public class ProductCardAdapter extends RecyclerView.Adapter<ProductCardAdapter.ProductViewHolder> {
+public class ProductCardManager extends RecyclerView.Adapter<ProductCardManager.ProductViewHolder> {
 
     private List<Product> productList;
+    private Context context;
 
-    public ProductCardAdapter(List<Product> productList) {
+    public ProductCardManager(Context context, List<Product> productList) {
+        this.context = context;
         this.productList = productList;
     }
 
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_card_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.product_card_layout, parent, false);
         return new ProductViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = productList.get(position);
-        // Set the data to views in the ViewHolder
-        holder.bind(product);
+
+        holder.productNameTextView.setText(product.getProductName());
+        holder.productPriceTextView.setText(String.valueOf(product.getProductPrice()));
+        Glide.with(context).load(product.getImageUrl()).into(holder.productImageView);
     }
 
     @Override
@@ -39,23 +47,16 @@ public class ProductCardAdapter extends RecyclerView.Adapter<ProductCardAdapter.
         return productList.size();
     }
 
-    static class ProductViewHolder extends RecyclerView.ViewHolder {
-        private TextView productNameTextView;
-        private TextView productPriceTextView;
-        // Add other views for product details (image, description, etc.)
+    public static class ProductViewHolder extends RecyclerView.ViewHolder {
+        ImageView productImageView;
+        TextView productNameTextView;
+        TextView productPriceTextView;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
-            // Initialize views from the product_card_layout
+            productImageView = itemView.findViewById(R.id.product_image_view);
             productNameTextView = itemView.findViewById(R.id.product_name_text_view);
             productPriceTextView = itemView.findViewById(R.id.product_price_text_view);
-            // Initialize other views
-        }
-
-        public void bind(Product product) {
-            productNameTextView.setText(product.getProductName());
-            productPriceTextView.setText(String.valueOf(product.getProductPrice()));
-            // Bind other data to respective views
         }
     }
 }

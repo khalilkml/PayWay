@@ -8,4 +8,15 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nav_bar">nav_bar</string>
+    <string name="watches">watches</string>
+    <string name="t_shorts">T-shorts</string>
+    <string name="shoos">Shoos</string>
+    <string name="backpack">backpack</string>
+    <string name="top_categories">Top Categories</string>
+    <string name="lets_gets_somethings">Lets gets somethings?</string>
+    <string name="hello_khalil">Hello khalil !</string>
+    <string name="other_new_products">other new Products</string>
+    <string name="logout">logout</string>
+    <string name="otp">OTP</string>
+    <string name="horizental_scrolling">Horizental scrolling</string>
 </resources>
