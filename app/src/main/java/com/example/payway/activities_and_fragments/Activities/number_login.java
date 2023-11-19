@@ -42,6 +42,4 @@ public class number_login extends AppCompatActivity {
             startActivity(intent);
         });
     }
-
-
 }
