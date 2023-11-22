@@ -9,4 +9,5 @@
     <!-- Orange Gradient Colors -->
     <color name="orangeDark">#FF4500</color> <!-- Darker shade -->
     <color name="orangeLight">#FFA07A</color> <!-- Lighter shade -->
+    <color name="your_desired_color">#EC702A</color>
 </resources>

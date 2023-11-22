@@ -1,6 +1,7 @@
 package com.example.payway.activities_and_fragments.Activities;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.payway.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,6 +44,9 @@ public class otp_Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.orange));
+        }
         setContentView(R.layout.activity_otp_login);
 
         otpInput = findViewById(R.id.login_otp);

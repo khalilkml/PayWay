@@ -1,8 +1,10 @@
 package com.example.payway.activities_and_fragments.Activities;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -23,37 +25,54 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.orange));
+        }
 
         smoothBottomBar=findViewById(R.id.bottomBar);
+
+        FragmentManager fragmentManager =getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.framelayout , new Home());
+        fragmentTransaction.commit();
         smoothBottomBar.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public boolean onItemSelect(int i) {
-                if(i==0){
-                    FragmentManager fragmentManager =getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.framelayout , new Home());
-                    fragmentTransaction.commit();
-                }
-                if(i==1){
-                    FragmentManager fragmentManager =getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.framelayout , new Favorit());
-                    fragmentTransaction.commit();
-                }
-                if(i==2){
-                    FragmentManager fragmentManager =getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.framelayout , new My_cart());
-                    fragmentTransaction.commit();
-                }
-                if(i==3){
-                    FragmentManager fragmentManager =getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.framelayout , new Profile());
-                    fragmentTransaction.commit();
+                switch (i) {
+                    case 0:
+                        FragmentManager fragmentManager =getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.framelayout , new Home());
+                        fragmentTransaction.commit();
+                        break;
+                    case 1:
+                        fragmentManager =getSupportFragmentManager();
+                        fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.framelayout , new Favorit());
+                        fragmentTransaction.commit();
+                        break;
+                    case 2:
+                        fragmentManager =getSupportFragmentManager();
+                        fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.framelayout , new My_cart());
+                        fragmentTransaction.commit();
+                        break;
+                    case 3:
+                        fragmentManager =getSupportFragmentManager();
+                        fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.framelayout , new Profile());
+                        fragmentTransaction.commit();
+                        break;
+                    default:
+                        fragmentManager =getSupportFragmentManager();
+                        fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.framelayout , new Home());
+                        fragmentTransaction.commit();
+                        break;
                 }
                 return false;
             }
         });
+
     }
 }

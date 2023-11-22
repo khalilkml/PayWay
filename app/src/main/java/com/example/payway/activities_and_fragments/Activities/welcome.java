@@ -1,6 +1,7 @@
 package com.example.payway.activities_and_fragments.Activities;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,7 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.payway.Data_Managers.Client;
 import com.example.payway.Data_Managers.Firebase;
@@ -27,6 +29,9 @@ public class welcome extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.orange));
+        }
         setContentView(R.layout.activity_welcome);
 
         usernameInput = findViewById(R.id.login_username);

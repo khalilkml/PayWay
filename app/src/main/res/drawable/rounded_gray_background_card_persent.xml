@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- rounded_gray_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="143dp" /> <!-- Adjust the radius to your preference -->
+    <solid android:color="@color/white" />
+</shape>

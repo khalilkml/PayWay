@@ -19,4 +19,9 @@
     <string name="logout">logout</string>
     <string name="otp">OTP</string>
     <string name="horizental_scrolling">Horizental scrolling</string>
+    <string name="es_market">ES Market</string>
+    <string name="product_past_price">Product past Price</string>
+    <string name="product_name">Product Name</string>
+    <string name="product_price">product price</string>
+    <string name="_30_off">30% OFF</string>
 </resources>

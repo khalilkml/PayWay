@@ -1,12 +1,14 @@
 package com.example.payway.activities_and_fragments.Activities;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.payway.Data_Managers.Firebase;
 import com.example.payway.R;
@@ -18,6 +20,9 @@ public class Splashscreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.orange));
+        }
 
         // Hide the title bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);

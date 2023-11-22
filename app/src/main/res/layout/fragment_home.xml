@@ -205,19 +205,21 @@
         </LinearLayout>
     </HorizontalScrollView>
     <!-- Vertical Scroll View for Products -->
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clipToPadding="false"
         android:layout_below="@+id/category_menu"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:padding="8dp"
-        android:scrollbars="vertical"
-        />
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:clipToPadding="false"
+        android:scrollbars="none" />
+
 
 
 </RelativeLayout>

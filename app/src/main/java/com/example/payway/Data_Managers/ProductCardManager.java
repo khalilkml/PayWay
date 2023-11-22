@@ -38,8 +38,11 @@ public class ProductCardManager extends RecyclerView.Adapter<ProductCardManager.
         Product product = productList.get(position);
 
         holder.productNameTextView.setText(product.getProductName());
-        holder.productPriceTextView.setText(String.valueOf(product.getProductPrice()));
+        holder.productPriceTextView.setText("$"+product.getProductPrice());
+        holder.productPastPriceTextView.setText("$"+product.getProductPastPrice());
         Glide.with(context).load(product.getImageUrl()).into(holder.productImageView);
+
+
     }
 
     @Override
@@ -51,12 +54,14 @@ public class ProductCardManager extends RecyclerView.Adapter<ProductCardManager.
         ImageView productImageView;
         TextView productNameTextView;
         TextView productPriceTextView;
+        TextView productPastPriceTextView;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             productImageView = itemView.findViewById(R.id.product_image_view);
-            productNameTextView = itemView.findViewById(R.id.product_name_text_view);
-            productPriceTextView = itemView.findViewById(R.id.product_price_text_view);
+            productNameTextView = itemView.findViewById(R.id.product_name);
+            productPriceTextView = itemView.findViewById(R.id.product_price);
+            productPastPriceTextView = itemView.findViewById(R.id.product_past_price);
         }
     }
 }

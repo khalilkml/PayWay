@@ -1,6 +1,7 @@
 package com.example.payway.activities_and_fragments.Activities;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.payway.R;
 import com.hbb20.CountryCodePicker;
@@ -22,6 +24,9 @@ public class number_login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.orange));
+        }
         setContentView(R.layout.number_login);
 
         countryCodePicker = findViewById(R.id.login_countrycode);

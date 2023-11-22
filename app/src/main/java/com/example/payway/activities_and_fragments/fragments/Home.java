@@ -1,18 +1,24 @@
 package com.example.payway.activities_and_fragments.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.payway.Data_Managers.Client;
 import com.example.payway.Data_Managers.Firebase;
 import com.example.payway.Data_Managers.Product;
 import com.example.payway.Data_Managers.ProductCardManager;
 import com.example.payway.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
@@ -23,7 +29,8 @@ public class Home extends Fragment {
 
     private List<com.example.payway.Data_Managers.Product> productList;
     private ProductCardManager productCardManager;
-
+    TextView client_name;
+    Client client;
     public Home() {
         // Required empty public constructor
     }
@@ -41,13 +48,34 @@ public class Home extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        //initializing the user name textview
+        client_name=view.findViewById(R.id.hellos);
+
+        //getting user details
+        Firebase.currentUserDetails().get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    client =    task.getResult().toObject(Client.class);
+                    if(client!=null){
+                        //puting user name in the hello
+                        client_name.setText("Hello "+client.getUsername());
+                    }
+                }
+            }
+        });
+
+
 
         productList = new ArrayList<>(); // Initialize an empty product list
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+
+
 
         // Initialize the adapter with an empty product list
         productCardManager = new ProductCardManager(getContext(), productList);

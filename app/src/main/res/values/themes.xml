@@ -9,7 +9,5 @@
         <item name="colorSecondary">@color/Light_orange</item>
         <item name="colorOnSecondary">@color/black</item>
 
-        <!-- Status bar color. -->
-        <!-- Customize your theme here. -->
     </style>
 </resources>
