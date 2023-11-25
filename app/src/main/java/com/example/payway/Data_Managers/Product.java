@@ -18,6 +18,9 @@ public class Product {
         this.isFavorite = isFavorite;
         this.imageUrl = imageUrl;
     }
+    public Product() {
+        // Needed by Firestore for serialization/deserialization
+    }
 
     // Getters and setters for productId
     public String getProductId() {

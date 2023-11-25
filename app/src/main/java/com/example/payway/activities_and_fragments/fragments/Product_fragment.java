@@ -1,26 +1,35 @@
 package com.example.payway.activities_and_fragments.fragments;
 
+import static com.example.payway.Data_Managers.Firebase.currentUserId;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
+import com.example.payway.Data_Managers.Client;
 import com.example.payway.Data_Managers.Product;
 import com.example.payway.R;
 import com.example.payway.activities_and_fragments.Activities.MainActivity;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Product_fragment extends Fragment {
 
@@ -30,6 +39,12 @@ public class Product_fragment extends Fragment {
     List<Product> productcartlsit = new ArrayList<>();
 
     private ProductViewModel productViewModel;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    Client client;
+
+    // Get the current user's ID
+    String userId = currentUserId();
+    CollectionReference productListRef;
 
     public Product_fragment() {
         // Required empty public constructor
@@ -104,23 +119,29 @@ public class Product_fragment extends Fragment {
 
             Button adtocart =view.findViewById(R.id.Addtocart);
 
+            // Reference to the user's product list collection
+            productListRef = db.collection("users")
+                    .document(userId)
+                    .collection("productList");
+
             adtocart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    
+                    checkIfProductExistsInCart(product);
                 }
             });
 
+
         }
 
-        @Override
-        public void onStart() {
-            super.onStart();
-            // Access the MainActivity
-            MainActivity mainActivity = (MainActivity) requireActivity();
-            // Hide the bottom app bar
-            mainActivity.hideBottomAppBar();
-        }
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Access the MainActivity
+        MainActivity mainActivity = (MainActivity) requireActivity();
+        // Hide the bottom app bar
+        mainActivity.hideBottomAppBar();
+    }
 
     @Override
     public void onStop() {
@@ -130,6 +151,45 @@ public class Product_fragment extends Fragment {
         // Hide the bottom app bar
         mainActivity.showBottomAppBar();
     }
+    private void checkIfProductExistsInCart(Product product) {
+        // Query to check if the product exists in the cart
+        productListRef.whereEqualTo("productName", product.getProductName())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (task.getResult() != null && !task.getResult().isEmpty()) {
+                            // Product exists in cart
+                            Toast.makeText(context, "Product already in cart", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Product does not exist in cart; add it
+                            addProductToCart(product);
+                        }
+                    } else {
+                        Toast.makeText(context, "Failed to check product", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+    private void addProductToCart(Product product) {
+        Map<String, Object> productData = new HashMap<>();
+        productData.put("productId", product.getProductId());
+        productData.put("productName", product.getProductName());
+        productData.put("productDescription", product.getProductDescription());
+        productData.put("productPrice", product.getProductPrice());
+        productData.put("productPastPrice", product.getProductPastPrice());
+        productData.put("isFavorite", product.isFavorite());
+        productData.put("imageUrl", product.getImageUrl());
+
+        productListRef.add(productData)
+                .addOnSuccessListener(documentReference -> {
+                    Toast.makeText(context, "Product added to cart", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(context, "Failed to add product", Toast.LENGTH_SHORT).show();
+                    Log.e("Firestore", "Error adding product to cart", e);
+                });
+    }
+
+
 
 
 }
