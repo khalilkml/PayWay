@@ -24,4 +24,9 @@
     <string name="product_name">Product Name</string>
     <string name="product_price">product price</string>
     <string name="_30_off">30% OFF</string>
+    <string name="available_in_stock">Available in stock</string>
+    <string name="about">About</string>
+    <string name="description">description</string>
+    <string name="past">past_</string>
+    <string name="add_to_cart">Add to cart</string>
 </resources>

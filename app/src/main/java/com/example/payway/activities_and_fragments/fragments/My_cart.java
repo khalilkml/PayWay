@@ -1,48 +1,41 @@
 package com.example.payway.activities_and_fragments.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.payway.Data_Managers.Product;
+import com.example.payway.Data_Managers.ProductCardManager;
 import com.example.payway.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link My_cart#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class My_cart extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.annotations.Nullable;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class My_cart extends Fragment  {
+
+    private ProductViewModel productViewModel;
+    private ProductCardManager productCardManager;
+
+    private List<Product> productList;
 
     public My_cart() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment My_cart.
-     */
-    // TODO: Rename and change types and number of parameters
     public static My_cart newInstance(String param1, String param2) {
         My_cart fragment = new My_cart();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,16 +43,34 @@ public class My_cart extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_cart, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_cart, container, false);
+
+
+        productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
+        ImageView back = view.findViewById(R.id.back);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view2);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+
+        productList = new ArrayList<>(); // Initialize an empty product list
+        productCardManager = new ProductCardManager(getContext(), productList);
+        recyclerView.setAdapter(productCardManager);
+        Log.d("ProductListContents", productList.toString());
+
+
+        back.setOnClickListener(v -> requireActivity().onBackPressed());
+
+        return view;
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
 }

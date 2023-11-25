@@ -14,9 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.payway.Data_Managers.Client;
 import com.example.payway.Data_Managers.Firebase;
+import com.example.payway.Data_Managers.MyAdapterListener;
 import com.example.payway.Data_Managers.Product;
 import com.example.payway.Data_Managers.ProductCardManager;
 import com.example.payway.R;
+import com.example.payway.activities_and_fragments.Activities.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -25,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Home extends Fragment {
+public class Home extends Fragment implements MyAdapterListener {
 
     private List<com.example.payway.Data_Managers.Product> productList;
     private ProductCardManager productCardManager;
@@ -70,6 +72,7 @@ public class Home extends Fragment {
 
 
 
+
         productList = new ArrayList<>(); // Initialize an empty product list
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
@@ -79,6 +82,7 @@ public class Home extends Fragment {
 
         // Initialize the adapter with an empty product list
         productCardManager = new ProductCardManager(getContext(), productList);
+        productCardManager.setListener(this);
         recyclerView.setAdapter(productCardManager);
 
         // Retrieve products from Firebase and update the product list
@@ -103,5 +107,13 @@ public class Home extends Fragment {
         });
 
         return view;
+    }
+
+    public void onPlaceClick(Product product) {
+        if (getActivity() instanceof MainActivity) {
+            MainActivity mainActivity = (MainActivity) getActivity();
+            mainActivity.changeFromHomeToProductWithProductdata(product);
+
+        }
     }
 }
