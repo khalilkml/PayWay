@@ -2,13 +2,17 @@ package com.example.payway.activities_and_fragments.fragments;
 
 import static com.example.payway.Data_Managers.Firebase.currentUserId;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -24,6 +28,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.annotations.Nullable;
@@ -62,6 +67,9 @@ public class My_cart extends Fragment  {
         productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
         ImageView back = view.findViewById(R.id.back);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view2);
+        TextView total = view.findViewById(R.id.Totale);
+        Button bynow = view.findViewById(R.id.Bynow);
+
         //2 cards in row
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
 
@@ -71,6 +79,7 @@ public class My_cart extends Fragment  {
                 .document(currentUserId())
                 .collection("productList");
 
+        AtomicReference<Double> totalDouble = new AtomicReference<>(0.0); // Initialize as AtomicReference
         // Retrieve data from Firestore
         productListRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -79,11 +88,18 @@ public class My_cart extends Fragment  {
                     // Convert Firestore document to Product object
                     Product product = document.toObject(Product.class);
                     retrievedProductList.add(product);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        totalDouble.updateAndGet(v -> v + Double.parseDouble(product.getProductPrice()));
+                    }
                 }
 
                 // Update the RecyclerView adapter with the retrieved product list
                 productCardManager = new ProductCardManager(getContext(), retrievedProductList);
                 recyclerView.setAdapter(productCardManager);
+
+                // Retrieve the final total after iteration
+                Double finalTotal = totalDouble.get();
+                total.setText(String.valueOf(finalTotal)); // or textView.setText(Double.toString(totalPrice));
             } else {
                 // Handle unsuccessful Firestore query
                 Log.e("Firestore", "Error getting documents: ", task.getException());
@@ -92,7 +108,29 @@ public class My_cart extends Fragment  {
 
 
 
-        back.setOnClickListener(v -> requireActivity().onBackPressed());
+        back.setOnClickListener(v -> {
+            if (getActivity() instanceof MainActivity) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.cartbackpress();
+            }
+        });
+        // Handle back press of the phone
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (getActivity() instanceof MainActivity) {
+                    MainActivity mainActivity = (MainActivity) getActivity();
+                    mainActivity.cartbackpress();
+                }
+            }
+        });
+
+        bynow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         return view;
     }

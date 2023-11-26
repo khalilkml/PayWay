@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapterListener
 
         smoothBottomBar=findViewById(R.id.bottomBar);
 
+
         FragmentManager fragmentManager =getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.framelayout , new Home());
@@ -109,6 +110,19 @@ public class MainActivity extends AppCompatActivity implements MyAdapterListener
             transaction.addToBackStack(null); // Optional: Add transaction to back stack
             transaction.commit();
     }
+
+
+    public void cartbackpress() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Home newhomeFragment = new Home();
+        transaction.replace(R.id.framelayout, newhomeFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+        showBottomAppBar();
+        // Update bottom navigation selection
+        smoothBottomBar.setItemActiveIndex(0);
+    }
+
 
     @Override
     public void onPlaceClick(Product product) {

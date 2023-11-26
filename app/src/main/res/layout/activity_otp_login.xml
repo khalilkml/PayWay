@@ -20,7 +20,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_margin="10dp"
-            android:background="@drawable/circular_bg"
+            android:background="@drawable/circulare_bg2"
             android:backgroundTint="@color/lightGrey">
 
             <TextView
@@ -35,7 +35,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_margin="10dp"
-            android:background="@drawable/circular_bg"
+            android:background="@drawable/circulare_bg2"
             android:backgroundTint="@color/orange">
 
             <TextView
@@ -50,16 +50,16 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_margin="10dp"
-            android:background="@drawable/circular_bg"
+            android:background="@drawable/circulare_bg2"
             android:backgroundTint="@color/lightGrey">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:text="3"
                 android:textColor="@color/white"
-                android:textSize="18sp"
-                android:text="3"/>
+                android:textSize="18sp" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -91,8 +91,8 @@
 
         <EditText
             android:id="@+id/login_otp"
-            android:layout_width="348dp"
-            android:layout_height="wrap_content"
+            android:layout_width="352dp"
+            android:layout_height="58dp"
             android:layout_margin="10dp"
             android:background="@drawable/edit_text_rounded_corners"
             android:elevation="5dp"
