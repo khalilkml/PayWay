@@ -8,8 +8,9 @@ public class Product {
     private String productPastPrice;
     private boolean isFavorite;
     private String imageUrl;
+    private String Type;
 
-    public Product(String productId, String productName, String productDescription, String productPrice, String productPastPrice, boolean isFavorite, String imageUrl) {
+    public Product(String productId, String productName, String productDescription, String productPrice, String productPastPrice, boolean isFavorite, String imageUrl, String Type) {
         this.productId = productId;
         this.productName = productName;
         this.productDescription = productDescription;
@@ -17,6 +18,7 @@ public class Product {
         this.productPastPrice = productPastPrice;
         this.isFavorite = isFavorite;
         this.imageUrl = imageUrl;
+        this.Type = Type;
     }
     public Product() {
         // Needed by Firestore for serialization/deserialization
@@ -83,5 +85,13 @@ public class Product {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String Type) {
+        this.Type = Type;
     }
 }

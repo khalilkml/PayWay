@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Theme.Payway">
@@ -78,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
             android:orientation="horizontal">
-        <TextView
+            <TextView
                 android:id="@+id/ads"
                 android:layout_width="170dp"
                 android:layout_height="100dp"
@@ -132,75 +133,135 @@
         android:layout_below="@+id/top_categories"
         android:contentDescription="@string/horizental_scrolling"
         android:scrollbars="none">
-    <!-- Horizontal Scroll View for Menu -->
+        <!-- Horizontal Scroll View for Menu -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:layout_marginStart="3dp"
             android:orientation="horizontal">
-            <ImageView
-                android:id="@+id/wacthes"
-                android:padding="8dp"
+
+            <FrameLayout
+                android:id="@+id/watch_frame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:src="@drawable/watch_svgrepo_com"
-                android:background="@drawable/rounded_gray_background"
-                />
+                android:padding="8dp"
+                android:background="@drawable/rounded_gray_background">
 
-            <ImageView
-                android:id="@+id/T_shorts"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:src="@drawable/short_sleeve_svgrepo_com__1_"
-                android:padding="8dp"
-                android:layout_marginStart="17dp"
-                android:background="@drawable/rounded_gray_background"/>
-            <ImageView
-                android:id="@+id/caps"
-                android:padding="8dp"
-                android:layout_marginStart="17dp"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:src="@drawable/cap_svgrepo_com"
-                android:background="@drawable/rounded_gray_background"
-                />
-            <ImageView
-                android:id="@+id/jacket"
-                android:padding="8dp"
-                android:layout_marginStart="17dp"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:src="@drawable/jacket_illustration_2_svgrepo_com"
-                android:background="@drawable/rounded_gray_background"
-                />
-            <ImageView
-                android:id="@+id/backpack"
-                android:padding="8dp"
-                android:layout_marginStart="17dp"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:src="@drawable/backpack_bag_holidays_svgrepo_com"
-                android:background="@drawable/rounded_gray_background"
-                />
-            <ImageView
-                android:id="@+id/shoas"
-                android:padding="8dp"
-                android:layout_marginStart="17dp"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:src="@drawable/shoe_store_svgrepo_com"
-                android:background="@drawable/rounded_gray_background"
-                />
+                <ImageView
+                    android:id="@+id/wacthes"
+                    android:layout_width="32dp"
+                    android:layout_height="31dp"
+                    android:src="@drawable/watch_svgrepo_com" />
 
-            <ImageView
-                android:id="@+id/shorts"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginStart="17dp"
+            </FrameLayout>
+
+
+            <FrameLayout
+                android:id="@+id/T_shorts_frame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:padding="8dp"
-                android:src="@drawable/short_jeans_clothing_wear_cloth_fashion_svgrepo_com"
-                android:background="@drawable/rounded_gray_background"/>
+                android:background="@drawable/rounded_gray_background">
+                <ImageView
+                    android:id="@+id/T_shorts"
+                    android:layout_width="32dp"
+                    android:layout_height="31dp"
+                    android:src="@drawable/short_sleeve_svgrepo_com__1_" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/caps_frame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:padding="8dp"
+                android:background="@drawable/rounded_gray_background">
+                <ImageView
+                    android:id="@+id/caps"
+                    android:layout_width="32dp"
+                    android:layout_height="31dp"
+                    android:src="@drawable/cap_svgrepo_com"
+
+                    />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/jacket_frame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:padding="8dp"
+                android:background="@drawable/rounded_gray_background">
+                <ImageView
+                    android:id="@+id/jacket"
+                    android:layout_width="32dp"
+                    android:layout_height="31dp"
+                    android:src="@drawable/jacket_illustration_2_svgrepo_com"
+
+                    />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/backpack_frame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:padding="8dp"
+                android:background="@drawable/rounded_gray_background"
+                tools:ignore="ExtraText">
+                <ImageView
+                    android:id="@+id/backpack"
+                    android:layout_width="32dp"
+                    android:layout_height="31dp"
+                    android:src="@drawable/backpack_bag_holidays_svgrepo_com"
+
+                    />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/shoas_frame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:padding="8dp"
+                android:background="@drawable/rounded_gray_background"
+                tools:ignore="ExtraText">
+                <ImageView
+                    android:id="@+id/shoas"
+                    android:layout_width="32dp"
+                    android:layout_height="31dp"
+                    android:src="@drawable/shoe_store_svgrepo_com"
+
+                    />
+
+            </FrameLayout>
+
+
+            <FrameLayout
+                android:id="@+id/shorts_frame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:padding="8dp"
+                android:background="@drawable/rounded_gray_background"
+                tools:ignore="ExtraText">
+
+                <ImageView
+                    android:id="@+id/shorts"
+                    android:layout_width="32dp"
+                    android:layout_height="31dp"
+                    android:src="@drawable/short_jeans_clothing_wear_cloth_fashion_svgrepo_com"
+                    />
+
+
+            </FrameLayout>
 
         </LinearLayout>
     </HorizontalScrollView>
@@ -223,4 +284,3 @@
 
 
 </RelativeLayout>
-

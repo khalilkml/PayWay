@@ -29,4 +29,6 @@
     <string name="description">description</string>
     <string name="past">past_</string>
     <string name="add_to_cart">Add to cart</string>
+    <string name="favorites">Favorite</string>
+    <string name="already_in_cart">Remove from cart</string>
 </resources>

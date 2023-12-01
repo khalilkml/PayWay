@@ -6,31 +6,31 @@
   <path
       android:strokeWidth="1"
       android:pathData="M6.83,7.58h0a0.75,0.75 0,1 1,0.75 -0.75A0.75,0.75 0,0 1,6.82 7.58Z"
-      android:fillColor="#9e9e9e"
-      android:strokeColor="#9e9e9e"/>
+      android:fillColor="#80A09E9E"
+      android:strokeColor="#80A09E9E"/>
   <path
       android:strokeWidth="1"
       android:pathData="M28,29.25L21.68,29.25a0.73,0.73 0,0 1,-0.68 -0.44L16,17.68 11,28.81a0.73,0.73 0,0 1,-0.68 0.44L4,29.25a0.74,0.74 0,0 1,-0.74 -0.85L6.08,6.73a0.74,0.74 0,0 1,0.74 -0.65L25.18,6.08a0.74,0.74 0,0 1,0.74 0.65L28.74,28.4a0.74,0.74 0,0 1,-0.74 0.85ZM22.17,27.75h5L24.52,7.58h-17L4.85,27.75h5l5.49,-12.21a0.77,0.77 0,0 1,1.36 0Z"
-      android:fillColor="#9e9e9e"
-      android:strokeColor="#9e9e9e"/>
+      android:fillColor="#80A09E9E"
+      android:strokeColor="#80A09E9E"/>
   <path
       android:strokeWidth="1"
       android:pathData="M25.18,7.58h0a0.75,0.75 0,1 1,0.76 -0.75A0.76,0.76 0,0 1,25.17 7.58Z"
-      android:fillColor="#9e9e9e"
-      android:strokeColor="#9e9e9e"/>
+      android:fillColor="#80A09E9E"
+      android:strokeColor="#80A09E9E"/>
   <path
       android:strokeWidth="1"
       android:pathData="M23.6,7.58H8.4a0.76,0.76 0,0 1,-0.75 -0.75V3.5a0.76,0.76 0,0 1,0.75 -0.75H23.6a0.76,0.76 0,0 1,0.75 0.75V6.83A0.76,0.76 0,0 1,23.6 7.58ZM9.15,6.08h13.7V4.25H9.15Z"
-      android:fillColor="#9e9e9e"
-      android:strokeColor="#9e9e9e"/>
+      android:fillColor="#80A09E9E"
+      android:strokeColor="#80A09E9E"/>
   <path
       android:strokeWidth="1"
       android:pathData="M26.1,14.67H26c-5.12,-0.42 -5.65,-3.91 -5.67,-4.06a0.75,0.75 0,0 1,1.48 -0.21c0,0.12 0.46,2.46 4.32,2.78a0.75,0.75 0,0 1,-0.07 1.5Z"
-      android:fillColor="#9e9e9e"
-      android:strokeColor="#9e9e9e"/>
+      android:fillColor="#80A09E9E"
+      android:strokeColor="#80A09E9E"/>
   <path
       android:strokeWidth="1"
       android:pathData="M5.94,14.73a0.75,0.75 0,0 1,-0.06 -1.5c3.87,-0.32 4.3,-2.68 4.31,-2.78A0.77,0.77 0,0 1,11 9.82a0.76,0.76 0,0 1,0.64 0.84c0,0.15 -0.56,3.64 -5.68,4.07Z"
-      android:fillColor="#9e9e9e"
-      android:strokeColor="#9e9e9e"/>
+      android:fillColor="#80A09E9E"
+      android:strokeColor="#80A09E9E"/>
 </vector>

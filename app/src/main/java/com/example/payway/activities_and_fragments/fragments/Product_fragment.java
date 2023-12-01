@@ -45,6 +45,7 @@ public class Product_fragment extends Fragment {
     // Get the current user's ID
     String userId = currentUserId();
     CollectionReference productListRef;
+    Button adtocart;
 
     public Product_fragment() {
         // Required empty public constructor
@@ -91,9 +92,14 @@ public class Product_fragment extends Fragment {
             TextView productPriceTextView = view.findViewById(R.id.product_price_view);
             TextView productPastPriceTextView = view.findViewById(R.id.product_past_price_view);
             TextView productdescription = view.findViewById(R.id.product_description_view);
+            adtocart =view.findViewById(R.id.Addtocart);
             ImageView back = view.findViewById(R.id.back);
 
-            back.setOnClickListener(v -> requireActivity().onBackPressed());
+            // Reference to the user's product list collection
+            productListRef = db.collection("users")
+                    .document(userId)
+                    .collection("productList");
+
 
 
             // Retrieve the task data from the arguments Bundle
@@ -106,6 +112,7 @@ public class Product_fragment extends Fragment {
                 String productPastPriceString = args.getString("productPastPrice"); // Retrieve the taskDate property
                 boolean isFavorite = args.getBoolean("isFavorite"); // Retrieve the isDone property
                 String imageUrlString = args.getString("imageUrl");
+                String TypeString = args.getString("Type");
 
                 Glide.with(context).load(imageUrlString).into(productImageView);
                 productNameTextView.setText(productNameString);
@@ -114,15 +121,13 @@ public class Product_fragment extends Fragment {
                 productdescription.setText(productDescriptionString);
 
 
-                product = new Product(productIdString,productNameString,productDescriptionString,productPriceString,productPastPriceString,isFavorite,imageUrlString);
+                product = new Product(productIdString,productNameString,productDescriptionString,productPriceString,productPastPriceString,isFavorite,imageUrlString ,TypeString);
             }
+            checkIfProductExistsInCartforchangebutton(product);
 
-            Button adtocart =view.findViewById(R.id.Addtocart);
+            back.setOnClickListener(v -> requireActivity().onBackPressed());
 
-            // Reference to the user's product list collection
-            productListRef = db.collection("users")
-                    .document(userId)
-                    .collection("productList");
+
 
             adtocart.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -130,6 +135,7 @@ public class Product_fragment extends Fragment {
                     checkIfProductExistsInCart(product);
                 }
             });
+
 
 
         }
@@ -169,6 +175,26 @@ public class Product_fragment extends Fragment {
                     }
                 });
     }
+    private void checkIfProductExistsInCartforchangebutton(Product product) {
+        // Query to check if the product exists in the cart
+        productListRef.whereEqualTo("productName", product.getProductName())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (task.getResult() != null && !task.getResult().isEmpty()) {
+                            // Product exists in cart
+                            adtocart.setText(R.string.already_in_cart);
+                            removeProductFromCart(product.getProductName());
+                            Toast.makeText(requireContext(), ""+product.getProductId(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Product does not exist in cart; add it
+                            adtocart.setEnabled(true);
+                        }
+                    } else {
+                        Toast.makeText(context, "Failed to check product", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
     private void addProductToCart(Product product) {
         Map<String, Object> productData = new HashMap<>();
         productData.put("productId", product.getProductId());
@@ -189,7 +215,18 @@ public class Product_fragment extends Fragment {
                 });
     }
 
-
+    private void removeProductFromCart(String productIdToRemove) {
+        // Reference to the specific document of the product in the user's cart
+        productListRef.document(productIdToRemove)
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(context, "Product removed from cart", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(context, "Failed to remove product from cart", Toast.LENGTH_SHORT).show();
+                    Log.e("Firestore", "Error removing product from cart", e);
+                });
+    }
 
 
 }

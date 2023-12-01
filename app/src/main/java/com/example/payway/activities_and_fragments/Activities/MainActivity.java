@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapterListener
 
             // Add the additional string data to the Bundle
             bundle.putString("imageUrl", product.getImageUrl());
+            bundle.putString("Type",product.getType());
             // Inside your MainActivity class
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             // Create a new instance of the ProductFragment
@@ -146,4 +147,5 @@ public class MainActivity extends AppCompatActivity implements MyAdapterListener
         // Hide the bottom app bar
         bottomAppBar.setVisibility(View.VISIBLE);
     }
+
 }

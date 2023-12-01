@@ -4,45 +4,37 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.payway.Data_Managers.Firebase;
+import com.example.payway.Data_Managers.MyAdapterListener;
+import com.example.payway.Data_Managers.Product;
+import com.example.payway.Data_Managers.ProductCardManager;
 import com.example.payway.R;
+import com.example.payway.activities_and_fragments.Activities.MainActivity;
+import com.google.firebase.firestore.DocumentSnapshot;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Favorit#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Favorit extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class Favorit extends Fragment implements MyAdapterListener {
+
+    private ProductCardManager productCardManager;
+    private List<com.example.payway.Data_Managers.Product> favproductList;
+    private List<com.example.payway.Data_Managers.Product> AllproductList;
 
     public Favorit() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Favorit.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Favorit newInstance(String param1, String param2) {
+    public static Favorit newInstance() {
         Favorit fragment = new Favorit();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,16 +42,59 @@ public class Favorit extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorit, container, false);
+        View view = inflater.inflate(R.layout.fragment_favorit, container, false);
+
+        AllproductList = new ArrayList<>(); // Initialize an empty product list
+        favproductList = new ArrayList<>(); // Initialize an empty product list
+
+        RecyclerView FavrecyclerView = view.findViewById(R.id.favorite_recycle);
+        FavrecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+
+        productCardManager = new ProductCardManager(getContext(), favproductList);
+        productCardManager.setListener(this);
+        FavrecyclerView.setAdapter(productCardManager);
+
+        //getting all products
+        Firebase.getAllProducts().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                String productId = document.getId();
+                String productName = document.getString("Product name");
+                String productDescription = document.getString("product description");
+                String productPrice = document.getString("product price");
+                String productPastPrice = document.getString("past price");
+                boolean isFavorite = Boolean.TRUE.equals(document.getBoolean("is favorite"));
+                String imageUrl = document.getString("image url");
+                String Type = document.getString("Type");
+
+                // Create Product object and add it to the product list
+                Product product = new Product(productId, productName, productDescription, productPrice, productPastPrice, isFavorite, imageUrl , Type);
+                AllproductList.add(product);
+                //testing for favorite products
+                if (product.isFavorite()){
+                    favproductList.add(product);
+                }
+
+            }
+            // Notify the adapter about the data change
+            productCardManager.notifyDataSetChanged();
+        }).addOnFailureListener(e -> {
+            // Handle any errors in retrieving data from Firebase
+            Toast.makeText(requireContext(), "An Error occurred! check your Network", Toast.LENGTH_SHORT).show();
+        });
+
+        return view;
+    }
+    public void onPlaceClick(Product product) {
+        if (getActivity() instanceof MainActivity) {
+            MainActivity mainActivity = (MainActivity) getActivity();
+            mainActivity.changeFromHomeToProductWithProductdata(product);
+
+        }
     }
 }

@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.payway.Data_Managers.MyAdapterListener;
 import com.example.payway.Data_Managers.Product;
 import com.example.payway.Data_Managers.ProductCardManager;
 import com.example.payway.R;
@@ -49,7 +50,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.annotations.Nullable;
 
-public class My_cart extends Fragment  {
+public class My_cart extends Fragment implements MyAdapterListener {
 
     private ProductViewModel productViewModel;
     private ProductCardManager productCardManager;
@@ -119,6 +120,7 @@ public class My_cart extends Fragment  {
 
                 // Update the RecyclerView adapter with the retrieved product list
                 productCardManager = new ProductCardManager(getContext(), retrievedProductList);
+                productCardManager.setListener(this);
                 recyclerView.setAdapter(productCardManager);
 
                 // Retrieve the final total after iteration
@@ -224,4 +226,12 @@ public class My_cart extends Fragment  {
         }
     }
 
+    @Override
+    public void onPlaceClick(Product product) {
+        if (getActivity() instanceof MainActivity) {
+            MainActivity mainActivity = (MainActivity) getActivity();
+            mainActivity.changeFromHomeToProductWithProductdata(product);
+
+        }
+    }
 }
