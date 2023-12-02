@@ -192,6 +192,7 @@ public class Home extends Fragment implements MyAdapterListener {
                 // Create Product object and add it to the product list
                 Product product = new Product(productId, productName, productDescription, productPrice, productPastPrice, isFavorite, imageUrl , Type);
                 AllproductList.add(product);
+
                 if (product.getType().equals("watches")){
                     productList.add(product);
                 }

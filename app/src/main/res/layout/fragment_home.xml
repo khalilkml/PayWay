@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:theme="@style/Theme.Payway">
 
     <!-- Action Bar -->
@@ -72,6 +73,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lets_get"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
         android:contentDescription="@string/horizental_scrolling"
         android:scrollbars="none">    <!-- Horizontal Scroll View for Menu -->
         <LinearLayout
@@ -79,38 +82,200 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
             android:orientation="horizontal">
-            <TextView
-                android:id="@+id/ads"
-                android:layout_width="170dp"
-                android:layout_height="100dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="21dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/rounded_gray_background"
-                android:text="@string/other_new_products"
-                android:textSize="35sp" />
-            <TextView
-                android:id="@+id/ads1"
-                android:layout_width="170dp"
-                android:layout_height="100dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="23dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/rounded_gray_background"
-                android:text="@string/other_new_products"
-                android:textSize="35sp" />
-            <TextView
-                android:id="@+id/ads2"
-                android:layout_width="170dp"
-                android:layout_height="100dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="23dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/rounded_gray_background"
-                android:text="@string/other_new_products"
-                android:textSize="35sp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/adscard"
+                android:orientation="vertical"
+
+                android:paddingStart="6dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="0dp"
+                android:paddingBottom="6dp">
+
+                <TextView
+                    android:id="@+id/textpersent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/rounded_gray_background_card_persent"
+                    android:padding="6dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="Get Now"
+                    android:textColor="@color/orange"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.059"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/product_name" />
+
+                <TextView
+                    android:id="@+id/product_name"
+                    android:layout_width="119dp"
+                    android:layout_height="47dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="15dp"
+                    android:lineSpacingExtra="3dp"
+                    android:maxLines="2"
+                    android:paddingStart="1dp"
+                    android:text="30% OFF DURING WAR ON GAZA"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/textpersent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shopingnew__1_"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/product_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/adscardblue"
+                android:orientation="vertical"
+                android:paddingStart="6dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="0dp"
+                android:paddingBottom="6dp">
+
+                <TextView
+                    android:id="@+id/textpersent2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/rounded_gray_background_card_persent"
+                    android:backgroundTint="#D65CEA"
+                    android:padding="6dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="Get Now"
+                    android:textColor="@color/white"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.059"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/product_name2" />
+
+                <TextView
+                    android:id="@+id/product_name2"
+                    android:layout_width="119dp"
+                    android:layout_height="47dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="15dp"
+                    android:lineSpacingExtra="3dp"
+                    android:maxLines="2"
+                    android:paddingStart="1dp"
+                    android:text="30% OFF DURING WAR ON GAZA"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/textpersent2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shopingnew__1_"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/product_name2"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/adscard"
+                android:orientation="vertical"
+                android:paddingStart="6dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="0dp"
+                android:paddingBottom="6dp">
+
+                <TextView
+                    android:id="@+id/textpersent3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/rounded_gray_background_card_persent"
+                    android:padding="6dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="Get Now"
+                    android:textColor="@color/orange"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.059"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/product_name3" />
+
+                <TextView
+                    android:id="@+id/product_name3"
+                    android:layout_width="119dp"
+                    android:layout_height="47dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="15dp"
+                    android:lineSpacingExtra="3dp"
+                    android:maxLines="2"
+                    android:paddingStart="1dp"
+                    android:text="30% OFF DURING WAR ON GAZA"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/textpersent3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shopingnew__1_"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/product_name3"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </HorizontalScrollView>
+
 
     <TextView
         android:id="@+id/top_categories"
@@ -118,13 +283,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ads_menu"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/top_categories"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
-
+        android:textSize="16sp" />
 
     <HorizontalScrollView
         android:id="@+id/category_menu"
@@ -137,15 +300,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="3dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginStart="16dp"
             android:orientation="horizontal">
 
             <FrameLayout
                 android:id="@+id/watch_frame"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="4dp"
                 android:padding="8dp"
                 android:background="@drawable/rounded_gray_background">
 

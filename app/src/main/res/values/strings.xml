@@ -13,7 +13,7 @@
     <string name="shoos">Shoos</string>
     <string name="backpack">backpack</string>
     <string name="top_categories">Top Categories</string>
-    <string name="lets_gets_somethings">Lets gets somethings?</string>
+    <string name="lets_gets_somethings">Let\'s get you Somethings?</string>
     <string name="hello_khalil">Hello khalil !</string>
     <string name="other_new_products">other new Products</string>
     <string name="logout">logout</string>
@@ -31,4 +31,8 @@
     <string name="add_to_cart">Add to cart</string>
     <string name="favorites">Favorite</string>
     <string name="remove_from_cart">Remove from cart</string>
+    <string name="have_a_look">Have a look on my Github</string>
+    <string name="hello">Hello</string>
+    <string name="hi_i_am_the_developer">Hi \uD83D\uDC4B, I am the developer</string>
+
 </resources>
