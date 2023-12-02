@@ -3,6 +3,7 @@ package com.example.payway.activities_and_fragments.fragments;
 import static com.example.payway.Data_Managers.Firebase.currentUserId;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -10,11 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -24,6 +27,7 @@ import com.example.payway.Data_Managers.Product;
 import com.example.payway.R;
 import com.example.payway.activities_and_fragments.Activities.MainActivity;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -37,6 +41,7 @@ public class Product_fragment extends Fragment {
     private static Product product;
     public Context context;
     List<Product> productcartlsit = new ArrayList<>();
+    List<Product> AllproductListofuser= new ArrayList<>();
 
     private ProductViewModel productViewModel;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -46,6 +51,9 @@ public class Product_fragment extends Fragment {
     String userId = currentUserId();
     CollectionReference productListRef;
     Button adtocart;
+    ImageView removeicon;
+    FrameLayout removefromcart;
+
 
     public Product_fragment() {
         // Required empty public constructor
@@ -93,12 +101,21 @@ public class Product_fragment extends Fragment {
             TextView productPastPriceTextView = view.findViewById(R.id.product_past_price_view);
             TextView productdescription = view.findViewById(R.id.product_description_view);
             adtocart =view.findViewById(R.id.Addtocart);
-            ImageView back = view.findViewById(R.id.back);
+            removefromcart =view.findViewById(R.id.removefromtocart);
+            removeicon = view.findViewById(R.id.removefromtocarticon);
+            removeicon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.orange), PorterDuff.Mode.SRC_ATOP);
+
+
+            FrameLayout back = view.findViewById(R.id.back);
+
+
+
 
             // Reference to the user's product list collection
             productListRef = db.collection("users")
                     .document(userId)
                     .collection("productList");
+
 
 
 
@@ -122,17 +139,57 @@ public class Product_fragment extends Fragment {
 
 
                 product = new Product(productIdString,productNameString,productDescriptionString,productPriceString,productPastPriceString,isFavorite,imageUrlString ,TypeString);
+
             }
-            checkIfProductExistsInCartforchangebutton(product);
+
+//            checkIfProductExistsInCartforchangebutton(product);
 
             back.setOnClickListener(v -> requireActivity().onBackPressed());
 
+            AllproductListofuser.clear();
+            productListRef.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot document : task.getResult()) {
+                        // Access each document's data here
+                        Product product = document.toObject(Product.class);
+                        AllproductListofuser.add(product);
+                    }
 
+                    boolean isProductInCart = isProductInList(product);
+
+                    if (isProductInCart) {
+                        adtocart.setEnabled(false);
+                        removeicon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.orange), PorterDuff.Mode.SRC_ATOP);
+                    } else {
+                        adtocart.setEnabled(true);
+                        removeicon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lightGray), PorterDuff.Mode.SRC_ATOP);
+                    }
+                } else {
+                    // Handle errors while fetching data
+                    Toast.makeText(context, "Failed to retrieve product list", Toast.LENGTH_SHORT).show();
+                }
+            });
 
             adtocart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     checkIfProductExistsInCart(product);
+                }
+            });
+
+            removefromcart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    removeProductFromCart(product.getProductId());
+                }
+            });
+            removeicon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    removeProductFromCart(product.getProductId());
                 }
             });
 
@@ -157,44 +214,26 @@ public class Product_fragment extends Fragment {
         // Hide the bottom app bar
         mainActivity.showBottomAppBar();
     }
+
     private void checkIfProductExistsInCart(Product product) {
-        // Query to check if the product exists in the cart
-        productListRef.whereEqualTo("productName", product.getProductName())
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        if (task.getResult() != null && !task.getResult().isEmpty()) {
-                            // Product exists in cart
-                            Toast.makeText(context, "Product already in cart", Toast.LENGTH_SHORT).show();
-                        } else {
-                            // Product does not exist in cart; add it
-                            addProductToCart(product);
-                        }
-                    } else {
-                        Toast.makeText(context, "Failed to check product", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        // Search in the AllproductListofuser list for the product by its ID
+        boolean productExists = false;
+        for (Product userProduct : AllproductListofuser) {
+            if (userProduct.getProductId().equals(product.getProductId())) {
+                // Product found in the user's list
+                productExists = true;
+                break;
+            }
+
+        }
+        if (productExists) {
+            Toast.makeText(requireContext(), "Product Already in Cart", Toast.LENGTH_SHORT).show();
+        } else {
+            // Product does not exist in cart; add it
+            addProductToCart(product);
+        }
     }
-    private void checkIfProductExistsInCartforchangebutton(Product product) {
-        // Query to check if the product exists in the cart
-        productListRef.whereEqualTo("productName", product.getProductName())
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        if (task.getResult() != null && !task.getResult().isEmpty()) {
-                            // Product exists in cart
-                            adtocart.setText(R.string.already_in_cart);
-                            removeProductFromCart(product.getProductName());
-                            Toast.makeText(requireContext(), ""+product.getProductId(), Toast.LENGTH_SHORT).show();
-                        } else {
-                            // Product does not exist in cart; add it
-                            adtocart.setEnabled(true);
-                        }
-                    } else {
-                        Toast.makeText(context, "Failed to check product", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
+
     private void addProductToCart(Product product) {
         Map<String, Object> productData = new HashMap<>();
         productData.put("productId", product.getProductId());
@@ -207,6 +246,9 @@ public class Product_fragment extends Fragment {
 
         productListRef.add(productData)
                 .addOnSuccessListener(documentReference -> {
+                    AllproductListofuser.add(product);
+                    removeicon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.orange), PorterDuff.Mode.SRC_ATOP);
+                    adtocart.setEnabled(false);
                     Toast.makeText(context, "Product added to cart", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
@@ -217,16 +259,44 @@ public class Product_fragment extends Fragment {
 
     private void removeProductFromCart(String productIdToRemove) {
         // Reference to the specific document of the product in the user's cart
-        productListRef.document(productIdToRemove)
-                .delete()
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(context, "Product removed from cart", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(context, "Failed to remove product from cart", Toast.LENGTH_SHORT).show();
-                    Log.e("Firestore", "Error removing product from cart", e);
+        productListRef.whereEqualTo("productId", productIdToRemove)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (DocumentSnapshot document : task.getResult()) {
+                            document.getReference().delete()
+                                    .addOnSuccessListener(aVoid -> {
+                                        AllproductListofuser.remove(getProductById(productIdToRemove));
+                                        adtocart.setEnabled(true);
+                                        removeicon.setColorFilter(ContextCompat.getColor(requireContext(), R.color.lightGray), PorterDuff.Mode.SRC_ATOP);
+                                        Toast.makeText(context, "Product removed from cart", Toast.LENGTH_SHORT).show();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Toast.makeText(context, "Failed to remove product from cart", Toast.LENGTH_SHORT).show();
+                                        Log.e("Firestore", "Error removing product from cart", e);
+                                    });
+                        }
+                    } else {
+                        Toast.makeText(context, "Failed to retrieve product list", Toast.LENGTH_SHORT).show();
+                    }
                 });
     }
+    private Product getProductById(String productId) {
+        for (Product product : AllproductListofuser) {
+            if (product.getProductId().equals(productId)) {
+                return product;
+            }
+        }
+        return null; // If the product with the given ID is not found
+    }
 
+    private boolean isProductInList(Product product) {
+        for (Product userProduct : AllproductListofuser) {
+            if (userProduct.getProductId().equals(product.getProductId())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

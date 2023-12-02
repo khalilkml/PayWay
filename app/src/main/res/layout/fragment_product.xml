@@ -7,17 +7,23 @@
     tools:context=".activities_and_fragments.fragments.Product_fragment"
     android:background="@drawable/circular_bg">
 
-
-    <ImageView
+    <FrameLayout
         android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:padding="0dp"
-        android:src="@drawable/back_arrow"
+        android:layout_width="65dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="14dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="7dp">
+
+        <ImageView
+            android:layout_width="52dp"
+            android:layout_height="42dp"
+            android:padding="0dp"
+            android:src="@drawable/back_arrow" />
+    </FrameLayout>
+
 
     <ImageView
         android:id="@+id/product_image"
@@ -119,11 +125,14 @@
         android:id="@+id/product_description_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="60dp"
         android:text="@string/description"
         android:textColor="#2F2F2F"
         android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/product_price_view" />
 
@@ -140,21 +149,45 @@
         app:layout_constraintStart_toEndOf="@+id/product_price_view"
         app:layout_constraintTop_toBottomOf="@+id/product_name_view" />
 
+
     <Button
         android:id="@+id/Addtocart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        android:layout_marginEnd="17dp"
+        android:background="@drawable/rounded_button"
         android:text="@string/add_to_cart"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.942"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/product_description_view"
-        app:layout_constraintVertical_bias="0.738"
-        android:layout_marginStart="17dp"
-        android:layout_marginEnd="17dp"
-        android:background="@drawable/rounded_button"
-        />
+        app:layout_constraintVertical_bias="0.737" />
+
+
+    <FrameLayout
+        android:id="@+id/removefromtocart"
+        android:layout_width="65dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toEndOf="@+id/back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        android:layout_marginEnd="16dp"
+        android:padding="8dp">
+
+        <ImageButton
+            android:id="@+id/removefromtocarticon"
+            android:layout_width="46dp"
+            android:layout_height="37dp"
+            android:src="@drawable/ic_delete_24"
+            android:background="#E1E0E0"
+            />
+    </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
