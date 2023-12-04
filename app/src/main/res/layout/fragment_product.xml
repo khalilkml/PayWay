@@ -40,10 +40,10 @@
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/little_circle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.239"
+        app:layout_constraintHorizontal_bias="0.199"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
         app:layout_constraintTop_toBottomOf="@+id/product_image" />
 
@@ -51,8 +51,8 @@
         android:id="@+id/imageView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="164dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/little_circle"
 
         app:layout_constraintStart_toStartOf="parent"
@@ -62,10 +62,10 @@
         android:id="@+id/imageView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="324dp"
+        android:layout_marginTop="330dp"
         android:background="@drawable/little_circle2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.087"
+        app:layout_constraintHorizontal_bias="0.076"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -126,7 +126,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="30dp"
+        android:paddingEnd="20dp"
         android:layout_marginStart="16dp"
         android:text="@string/description"
         android:textColor="#2F2F2F"
@@ -184,9 +185,9 @@
             android:id="@+id/removefromtocarticon"
             android:layout_width="46dp"
             android:layout_height="37dp"
-            android:src="@drawable/ic_delete_24"
             android:background="#E1E0E0"
-            />
+            android:src="@drawable/ic_delete_24"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
     </FrameLayout>
 
 

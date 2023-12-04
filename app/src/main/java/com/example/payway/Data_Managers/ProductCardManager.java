@@ -19,8 +19,10 @@ import com.example.payway.R;
 import com.example.payway.activities_and_fragments.Activities.MainActivity;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +30,7 @@ import java.util.Map;
 public class ProductCardManager extends RecyclerView.Adapter<ProductCardManager.ProductViewHolder> {
 
     private List<Product> productList;
+    private List<Product> favproductList =new ArrayList<>();
     private Context context;
     private MainActivity mainActivity; // Add MainActivity reference
     private MyAdapterListener listener;
@@ -62,6 +65,31 @@ public class ProductCardManager extends RecyclerView.Adapter<ProductCardManager.
         holder.productPastPriceTextView.setText("$"+product.getProductPastPrice());
         Glide.with(context).load(product.getImageUrl()).into(holder.productImageView);
 
+        Firebase.getAllProductsfromfavorit().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                String productId = document.getId();
+                String productName = document.getString("Product name");
+                String productDescription = document.getString("product description");
+                String productPrice = document.getString("product price");
+                String productPastPrice = document.getString("past price");
+                boolean isFavorite = Boolean.TRUE.equals(document.getBoolean("is favorite"));
+                String imageUrl = document.getString("image url");
+                String Type = document.getString("Type");
+
+                // Create Product object and add it to the product list
+                Product favproduct = new Product(productId, productName, productDescription, productPrice, productPastPrice, isFavorite, imageUrl , Type);
+                try {
+                    favproductList.add(favproduct);
+                } catch (NullPointerException e) {
+                    // Handle the potential null pointer exception here
+                    e.printStackTrace(); // or log the exception or take necessary action
+                    Toast.makeText(context, "nofavorite product", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).addOnFailureListener(e -> {
+            // Handle any errors in retrieving data from Firebase
+            Toast.makeText(context, "An Error occurred! check your Network", Toast.LENGTH_SHORT).show();
+        });
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +104,12 @@ public class ProductCardManager extends RecyclerView.Adapter<ProductCardManager.
         });
 
         /// Replace "products" with your collection name and "productId" with the ID of the document you want to update
-        DocumentReference productRef = db.collection("products").document(product.getProductId());
+        CollectionReference productRef = db.collection("users").document(Firebase.currentUserId()).collection("favoritesproductList");
+        DocumentReference productToRemoveRef = db.collection("users")
+                .document(Firebase.currentUserId().toString())
+                .collection("favoritesproductList")
+                .document(product.getProductId());
+
 
 
         // Check if the product is already in favorites
@@ -92,29 +125,38 @@ public class ProductCardManager extends RecyclerView.Adapter<ProductCardManager.
             // Toggle the favorite status
             product.setFavorite(!product.isFavorite());
 
+            if (product.isFavorite()){
+                // Create a Map to hold the fields you want to update
+                Map<String, Object> updates = new HashMap<>();
+                updates.put("Product name", product.getProductName());
+                updates.put("product description",  product.getProductDescription());
+                updates.put("product price",  product.getProductPrice());
+                updates.put("past price",  product.getProductPastPrice());
+                updates.put("image url",  product.getImageUrl());
+                updates.put("Type",  product.getType());
+                updates.put("is favorite",  product.isFavorite());
 
-            // Create a Map to hold the fields you want to update
-            Map<String, Object> updates = new HashMap<>();
-            updates.put("Product name", product.getProductName());
-            updates.put("product description",  product.getProductDescription());
-            updates.put("product price",  product.getProductPrice());
-            updates.put("past price",  product.getProductPastPrice());
-            updates.put("image url",  product.getImageUrl());
-            updates.put("Type",  product.getType());
-            updates.put("is favorite",  product.isFavorite());
-
-            // Perform the update
-            productRef.update(updates)
-                    .addOnSuccessListener(aVoid -> {
-                        if (product.isFavorite()){
+                // Perform the update
+                productRef.document(product.getProductId())
+                        .set(updates)
+                        .addOnSuccessListener(aVoid -> {
                             Toast.makeText(context, "Added to favorites", Toast.LENGTH_SHORT).show();
-                        }else {
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(context, "not added", Toast.LENGTH_SHORT).show();
+                        });
+            }else {
+                // Delete the specific document
+                productToRemoveRef.delete()
+                        .addOnSuccessListener(aVoid -> {
+                            // Document successfully deleted
                             Toast.makeText(context, "removed from favorites", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(context, "not added", Toast.LENGTH_SHORT).show();
-                    });
+                        })
+                        .addOnFailureListener(e -> {
+                            // Handle failure
+                            Toast.makeText(context, "product not removed from favorites", Toast.LENGTH_SHORT).show();
+                        });
+            }
 
             // Update the UI based on the favorite status change
             if (product.isFavorite()) {

@@ -77,20 +77,21 @@
         android:id="@+id/Bynow2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="17dp"
-        android:layout_marginEnd="19dp"
-        android:layout_marginBottom="29dp">
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="14dp">
 
         <com.paypal.checkout.paymentbutton.PaymentButtonContainer
             android:id="@+id/payment_button_container"
-            android:layout_width="333dp"
-            android:layout_height="73dp"
-            android:layout_marginStart="-1dp"
-            android:layout_marginTop="-12dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginBottom="21dp" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp" />
     </FrameLayout>
 
 </RelativeLayout>

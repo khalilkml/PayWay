@@ -163,23 +163,23 @@ public class My_cart extends Fragment implements MyAdapterListener {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Access the MainActivity
-        MainActivity mainActivity = (MainActivity) requireActivity();
-        // Hide the bottom app bar
-        mainActivity.hideBottomAppBar();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        // Access the MainActivity
-        MainActivity mainActivity = (MainActivity) requireActivity();
-        // Hide the bottom app bar
-        mainActivity.showBottomAppBar();
-    }
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        // Access the MainActivity
+//        MainActivity mainActivity = (MainActivity) requireActivity();
+//        // Hide the bottom app bar
+//        mainActivity.hideBottomAppBar();
+//    }
+//
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//        // Access the MainActivity
+//        MainActivity mainActivity = (MainActivity) requireActivity();
+//        // Hide the bottom app bar
+//        mainActivity.showBottomAppBar();
+//    }
 
     private void initiatePayPalPayment(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

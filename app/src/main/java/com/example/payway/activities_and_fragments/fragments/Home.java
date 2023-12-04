@@ -34,12 +34,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class Home extends Fragment implements MyAdapterListener {
 
     private List<com.example.payway.Data_Managers.Product> productList;
     private List<com.example.payway.Data_Managers.Product> AllproductList;
+    private List<com.example.payway.Data_Managers.Product> favproductList;
     private ProductCardManager productCardManager;
     TextView client_name;
     Client client;
@@ -165,7 +167,8 @@ public class Home extends Fragment implements MyAdapterListener {
 
 
         AllproductList = new ArrayList<>(); // Initialize an empty product list
-        productList = new ArrayList<>(); // Initialize an empty product list
+        productList = new ArrayList<>();
+        favproductList = new ArrayList<>();// Initialize an empty product list
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
@@ -177,6 +180,33 @@ public class Home extends Fragment implements MyAdapterListener {
         productCardManager.setListener(this);
         recyclerView.setAdapter(productCardManager);
 
+
+        //getting all favorite products
+        Firebase.getAllProductsfromfavorit().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                String productId = document.getId();
+                String productName = document.getString("Product name");
+                String productDescription = document.getString("product description");
+                String productPrice = document.getString("product price");
+                String productPastPrice = document.getString("past price");
+                boolean isFavorite = Boolean.TRUE.equals(document.getBoolean("is favorite"));
+                String imageUrl = document.getString("image url");
+                String Type = document.getString("Type");
+
+                // Create Product object and add it to the product list
+                Product favproduct = new Product(productId, productName, productDescription, productPrice, productPastPrice, isFavorite, imageUrl , Type);
+                try {
+                    favproductList.add(favproduct);
+                } catch (NullPointerException e) {
+                    // Handle the potential null pointer exception here
+                    e.printStackTrace(); // or log the exception or take necessary action
+                    Toast.makeText(requireContext(), "nofavorite product", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).addOnFailureListener(e -> {
+            // Handle any errors in retrieving data from Firebase
+            Toast.makeText(requireContext(), "An Error occurred! check your Network", Toast.LENGTH_SHORT).show();
+        });
         // Retrieve wathes products from Firebase and update the product list
         Firebase.getAllProducts().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
@@ -191,10 +221,26 @@ public class Home extends Fragment implements MyAdapterListener {
 
                 // Create Product object and add it to the product list
                 Product product = new Product(productId, productName, productDescription, productPrice, productPastPrice, isFavorite, imageUrl , Type);
+
                 AllproductList.add(product);
 
-                if (product.getType().equals("watches")){
-                    productList.add(product);
+                for (Product product1 : AllproductList){
+                    for (Product product2 : favproductList){
+                        if (product1.getProductId().equals(product2.getProductId())){
+                            product1.setFavorite(true);
+                            productCardManager.notifyDataSetChanged();
+                        }
+                    }
+                }
+
+                try {
+                    if (Objects.equals(product.getType(), "watches")) {
+                        productList.add(product);
+                    }
+                } catch (NullPointerException e) {
+                    // Handle the potential null pointer exception here
+                    e.printStackTrace(); // or log the exception or take necessary action
+                    Toast.makeText(requireContext(), "no product to sell", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -204,7 +250,6 @@ public class Home extends Fragment implements MyAdapterListener {
             // Handle any errors in retrieving data from Firebase
              Toast.makeText(requireContext(), "An Error occurred! check your Network", Toast.LENGTH_SHORT).show();
         });
-
 
         //set the selected category by default
         watch_frame.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.orange));
@@ -265,15 +310,8 @@ public class Home extends Fragment implements MyAdapterListener {
         wacthes.setImageResource(R.drawable.watch_svgrepo_com_field);
         wacthes.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.orange));
 
-        productList.clear();
-        //loop on the all products list
-        for (Product product1 : AllproductList){
-            if (product1.getType().equals("watches")){
-                productList.add(product1);
-            }
-            // Notify the adapter about the data change
-            productCardManager.notifyDataSetChanged();
-        }
+        bringthisproduct("watches");
+
     }
 
     public void onT_shortsClick(){
@@ -314,15 +352,7 @@ public class Home extends Fragment implements MyAdapterListener {
         T_shorts.setImageResource(R.drawable.short_sleeve_svg_com__1_filled);
         T_shorts.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.orange));
 
-        productList.clear();
-        //loop on the all products list
-        for (Product product1 : AllproductList){
-            if (product1.getType().equals("T_shorts")){
-                productList.add(product1);
-            }
-            // Notify the adapter about the data change
-            productCardManager.notifyDataSetChanged();
-        }
+        bringthisproduct("T_shorts");
     }
 
     public void oncapsClick(){
@@ -363,15 +393,7 @@ public class Home extends Fragment implements MyAdapterListener {
         caps.setImageResource(R.drawable.cap_svgrepo_com_filled);
         caps.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.orange));
 
-        productList.clear();
-        //loop on the all products list
-        for (Product product1 : AllproductList){
-            if (product1.getType().equals("Caps")){
-                productList.add(product1);
-            }
-            // Notify the adapter about the data change
-            productCardManager.notifyDataSetChanged();
-        }
+        bringthisproduct("Caps");
     }
 
     public void onjacketClick(){
@@ -412,15 +434,7 @@ public class Home extends Fragment implements MyAdapterListener {
         jacket.setImageResource(R.drawable.jacket_svgrepo_com_filled);
         jacket.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.orange));
 
-        productList.clear();
-        //loop on the all products list
-        for (Product product1 : AllproductList){
-            if (product1.getType().equals("jacket")){
-                productList.add(product1);
-            }
-            // Notify the adapter about the data change
-            productCardManager.notifyDataSetChanged();
-        }
+        bringthisproduct("jacket");
     }
     public void onbackpackClick(){
         //set the non selected colors
@@ -460,15 +474,7 @@ public class Home extends Fragment implements MyAdapterListener {
         backpack.setImageResource(R.drawable.backpack_bag_filled);
         backpack.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.orange));
 
-        productList.clear();
-        //loop on the all products list
-        for (Product product1 : AllproductList){
-            if (product1.getType().equals("backpack")){
-                productList.add(product1);
-            }
-            // Notify the adapter about the data change
-            productCardManager.notifyDataSetChanged();
-        }
+        bringthisproduct("backpack");
     }
     public void onshoasClick(){
         //set the non selected colors
@@ -508,15 +514,7 @@ public class Home extends Fragment implements MyAdapterListener {
         shoas.setImageResource(R.drawable.shoe_filled);
         shoas.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.orange));
 
-        productList.clear();
-        //loop on the all products list
-        for (Product product1 : AllproductList){
-            if (product1.getType().equals("shoas")){
-                productList.add(product1);
-            }
-            // Notify the adapter about the data change
-            productCardManager.notifyDataSetChanged();
-        }
+        bringthisproduct("shoas");
     }
     public void onshortsClick(){
         //set the non selected colors
@@ -556,11 +554,21 @@ public class Home extends Fragment implements MyAdapterListener {
         shorts.setImageResource(R.drawable.short_pants_filled);
         shorts.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.orange));
 
+        bringthisproduct("shorts");
+    }
+    public void bringthisproduct(String thisType){
+        //clear the list
         productList.clear();
-        //loop on the all products list
+        //update the list
         for (Product product1 : AllproductList){
-            if (product1.getType().equals("shorts")){
-                productList.add(product1);
+            try {
+                if (Objects.equals(product1.getType(), thisType)) {
+                    productList.add(product1);
+                }
+            } catch (NullPointerException e) {
+                // Handle the potential null pointer exception here
+                e.printStackTrace(); // or log the exception or take necessary action
+                Toast.makeText(requireContext(), "wait for product", Toast.LENGTH_SHORT).show();
             }
             // Notify the adapter about the data change
             productCardManager.notifyDataSetChanged();

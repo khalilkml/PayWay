@@ -37,13 +37,13 @@ public class number_login extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
 
         countryCodePicker.registerCarrierNumberEditText(phoneInput);
-        sendOtpBtn.setOnClickListener((v)->{
-            if(!countryCodePicker.isValidFullNumber()){
+        sendOtpBtn.setOnClickListener(v -> {
+            if (!countryCodePicker.isValidFullNumber()) {
                 phoneInput.setError("Phone number not valid");
                 return;
             }
             Intent intent = new Intent(number_login.this, otp_Login.class);
-            intent.putExtra("phone",countryCodePicker.getFullNumberWithPlus());
+            intent.putExtra("phone", countryCodePicker.getFullNumberWithPlus());
             startActivity(intent);
         });
     }

@@ -40,6 +40,9 @@ public class    Firebase {
     public static Task<QuerySnapshot> getAllProducts() {
         return FirebaseFirestore.getInstance().collection("products").get();
     }
+    public static Task<QuerySnapshot> getAllProductsfromfavorit() {
+        return FirebaseFirestore.getInstance().collection("users").document(Firebase.currentUserId()).collection("favoritesproductList").get();
+    }
 
     // Method to retrieve product data with its image from Cloud Storage
     public static Task<QuerySnapshot> getProductsWithImages() {

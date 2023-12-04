@@ -60,8 +60,8 @@ public class Favorit extends Fragment implements MyAdapterListener {
         productCardManager.setListener(this);
         FavrecyclerView.setAdapter(productCardManager);
 
-        //getting all products
-        Firebase.getAllProducts().addOnSuccessListener(queryDocumentSnapshots -> {
+        //getting all favorite products
+        Firebase.getAllProductsfromfavorit().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
                 String productId = document.getId();
                 String productName = document.getString("Product name");

@@ -138,24 +138,31 @@ public class otp_Login extends AppCompatActivity {
 
     }
 
-    void startResendTimer(){
+    void startResendTimer() {
         resendOtpTextView.setEnabled(false);
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 timeoutSeconds--;
-                resendOtpTextView.setText("Resend OTP in "+timeoutSeconds +" seconds");
-                if(timeoutSeconds<=0){
-                    timeoutSeconds =60L;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        resendOtpTextView.setText("Resend OTP in " + timeoutSeconds + " seconds");
+                    }
+                });
+                if (timeoutSeconds <= 0) {
+                    timeoutSeconds = 60L;
                     timer.cancel();
-                    runOnUiThread(() -> {
-                        resendOtpTextView.setEnabled(true);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            resendOtpTextView.setEnabled(true);
+                        }
                     });
                 }
             }
-        },0,1000);
+        }, 0, 1000);
     }
-
 
 }
