@@ -3,8 +3,8 @@
 Welcome to the repository for our E-Commerce Android App, a fully functional shopping application built using modern technologies and best practices. This app offers a seamless shopping experience with secure user authentication, dynamic product listings, and integrated payment solutions.
 
 ## Screenshots
+![mockup](https://github.com/khalilkml/PayWay/assets/98777119/61b6b757-f61f-4b3c-98cf-a33e2da79916)
 
-mockup.png
 
 ## Features
 
@@ -69,4 +69,4 @@ To run this project locally, follow these steps:
 
 ## Contact
 
-For any inquiries or feedback, feel free to reach out at [khalilkml123@gmail.com].
+For any inquiries or feedback, feel free to reach out at khalilkml123@gmail.com.
