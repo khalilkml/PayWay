@@ -1,4 +1,4 @@
-# E-Commerce Android App
+# PayWay
 
 Welcome to the repository for our E-Commerce Android App, a fully functional shopping application built using modern technologies and best practices. This app offers a seamless shopping experience with secure user authentication, dynamic product listings, and integrated payment solutions.
 
